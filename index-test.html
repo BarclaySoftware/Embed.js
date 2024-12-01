@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Advanced Embed.js</title>
+    <script src="embed-test.js"></script>
+</head>
+<body>
+    <h1>Super Advanced Embed.js</h1>
+    <div id="container"></div>
+    <script>
+        embed.create({
+            source: "https://example.com",
+            size: { width: "800px", height: "400px" },
+            resizable: true,
+            draggable: true,
+            opacity: 0.9,
+            fullscreenButton: true,
+            alignment: "center",
+            debug: true,
+            autoRefresh: 5000,
+        });
+    </script>
+</body>
+</html>

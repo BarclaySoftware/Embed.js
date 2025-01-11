@@ -42,8 +42,8 @@
 
             // Apply size or expand based on the expand option
             if (config.expand) {
-                iframe.style.width = "100%";
-                iframe.style.height = "100%";
+                iframe.style.width = "100vw";
+                iframe.style.height = "100vh";
             } else {
                 iframe.style.width = config.size.width;
                 iframe.style.height = config.size.height;
@@ -106,8 +106,8 @@
             // Update size or expand
             if (options.expand !== undefined) {
                 if (options.expand) {
-                    iframe.style.width = "100%";
-                    iframe.style.height = "100%";
+                    iframe.style.width = "100vw";
+                    iframe.style.height = "100vh";
                 } else if (options.size) {
                     iframe.style.width = options.size.width;
                     iframe.style.height = options.size.height;

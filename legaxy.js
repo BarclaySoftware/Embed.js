@@ -1,4 +1,4 @@
-// Advanced Embed.js Library with Alignment and Expand Option
+// Advanced Embed.js Library with Alignment Option
 (function (global) {
     class Embed {
         constructor() {
@@ -9,7 +9,6 @@
         create(options) {
             const defaults = {
                 size: { width: "600px", height: "400px" },
-                expand: false, // New option for expanding iframe
                 source: "https://thejupitergroup.wixstudio.com/iframe",
                 uuid: this.generateUUID(),
                 parent: document.body,
@@ -18,6 +17,7 @@
                 sandbox: "", // Sandbox attributes like "allow-scripts"
                 title: "Embedded Frame",
                 className: "", // Custom CSS class
+                // preventRightClick: false, // Disable right-click inside the iframe
                 preventRedirects: false, // Block iframe navigation/redirects
                 onLoad: null, // onLoad callback
                 onPreventedRedirect: null, // Callback for prevented redirects
@@ -36,18 +36,11 @@
             // Create the iframe
             const iframe = document.createElement("iframe");
             iframe.src = config.source;
+            iframe.width = config.size.width.replace("px", "");
+            iframe.height = config.size.height.replace("px", "");
             iframe.id = config.uuid;
             iframe.title = config.title;
             iframe.style.border = "0";
-
-            // Apply size or expand based on the expand option
-            if (config.expand) {
-                iframe.style.width = "100%";
-                iframe.style.height = "100%";
-            } else {
-                iframe.style.width = config.size.width;
-                iframe.style.height = config.size.height;
-            }
 
             // Apply custom styles
             Object.entries(config.styles).forEach(([key, value]) => {
@@ -79,6 +72,12 @@
                 iframe.onload = () => config.onLoad(iframe);
             }
 
+            // Prevent right-click if enabled
+            // if (config.preventRightClick) {
+            //     this.preventIframeRightClick(iframe);
+            // }
+            
+
             // Prevent redirects if enabled
             if (config.preventRedirects) {
                 this.preventIframeRedirects(iframe, config.onPreventedRedirect);
@@ -103,15 +102,10 @@
             // Update source
             if (options.source) iframe.src = options.source;
 
-            // Update size or expand
-            if (options.expand !== undefined) {
-                if (options.expand) {
-                    iframe.style.width = "100%";
-                    iframe.style.height = "100%";
-                } else if (options.size) {
-                    iframe.style.width = options.size.width;
-                    iframe.style.height = options.size.height;
-                }
+            // Update size
+            if (options.size) {
+                iframe.width = options.size.width.replace("px", "");
+                iframe.height = options.size.height.replace("px", "");
             }
 
             // Update styles
@@ -170,8 +164,8 @@
             }
 
             const iframe = frame.iframe;
-            iframe.style.width = size.width;
-            iframe.style.height = size.height;
+            iframe.width = size.width.replace("px", "");
+            iframe.height = size.height.replace("px", "");
 
             // Update configuration in stored frames
             frame.config.size = size;
@@ -191,6 +185,36 @@
                     return "flex-start";
             }
         }
+
+        // Prevent right-click in iframe
+        // Prevent right-click in iframe
+        // preventIframeRightClick(iframe) {
+        //     iframe.addEventListener("load", () => {
+        //         const iframeWindow = iframe.contentWindow;
+        //         const iframeDoc = iframe.contentDocument || iframeWindow.document;
+        //
+        //         if (iframeDoc) {
+        //             try {
+        //                 // Attach a contextmenu event listener to the iframe's document
+        //                 iframeDoc.addEventListener("contextmenu", (e) => {
+        //                     e.preventDefault();
+        //                     console.warn("Right-click is disabled inside the iframe.");
+        //                 });
+        //
+        //                 // For older browsers or strict sandboxed iframes, fallback to disabling the iframe window event
+        //                 iframeWindow.addEventListener("contextmenu", (e) => {
+        //                     e.preventDefault();
+        //                     console.warn("Right-click is disabled inside the iframe (fallback).");
+        //                 });
+        //             } catch (err) {
+        //                 console.error(
+        //                     "Unable to attach right-click prevention to iframe. Make sure the iframe is hosted on the same origin.",
+        //                     err
+        //                 );
+        //             }
+        //         }
+        //     });
+        // }
 
         // Prevent iframe redirects
         preventIframeRedirects(iframe, onPreventedRedirect) {

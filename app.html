@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmbeddedApp Customizer</title>
+    <script src="embed.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #iframe-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        iframe {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="iframe-container"></div>
+    <script>
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                source: params.get('source') || 'https://thejupitergroup.wixstudio.com/iframe',
+                width: params.get('width') || '100%',
+                height: params.get('height') || '100%',
+                alignment: params.get('alignment') || 'center',
+            };
+        }
+        function getDomainFromUrl(url) {
+            const link = document.createElement('a');
+            link.href = url;
+            return link.hostname;
+        }
+        const whitelistedDomains = [
+            'thejupitergroup.wixstudio.com',
+            'example.com',
+            'rubisco.pages.dev'
+        ];
+        function initializeIframe() {
+            const params = getUrlParams();
+            const iframeDomain = getDomainFromUrl(params.source);
+            if (!whitelistedDomains.includes(iframeDomain)) {
+                params.source = 'https://thejupitergroup.wixstudio.com/iframe/error';
+            }
+            document.getElementById('iframe-container').style.justifyContent = params.alignment;
+            const iframe = document.createElement('iframe');
+            iframe.src = params.source;
+            iframe.style.width = params.width === '100%' ? '100%' : params.width;
+            iframe.style.height = params.height === '100%' ? '100%' : params.height;
+            document.getElementById('iframe-container').appendChild(iframe);
+        }
+        initializeIframe();
+    </script>
+</body>
+</html>

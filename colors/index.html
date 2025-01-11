@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color API Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .color-button {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color API Demo</h1>
+    <p id="demo-text">This text will change colors!</p>
+    <div>
+        <label for="element-id">Element ID:</label>
+        <input type="text" id="element-id" placeholder="Enter element ID" value="demo-text">
+    </div>
+    <div class="color-options">
+        <button class="color-button" style="background-color: #FF5733;" onclick="applyColor('sunset')">Sunset</button>
+        <button class="color-button" style="background-color: #1E90FF;" onclick="applyColor('ocean')">Ocean</button>
+        <button class="color-button" style="background-color: #228B22;" onclick="applyColor('forest')">Forest</button>
+        <button class="color-button" style="background-color: #E6E6FA; color: black;" onclick="applyColor('lavender')">Lavender</button>
+        <button class="color-button" style="background-color: #FFD700; color: black;" onclick="applyColor('sunshine')">Sunshine</button>
+        <button class="color-button" style="background-color: #DC143C;" onclick="applyColor('cherry')">Cherry</button>
+        <button class="color-button" style="background-color: #FF7F50;" onclick="applyColor('coral')">Coral</button>
+    </div>
+    <script>
+        function applyColor(colorName) {
+            const elementId = document.getElementById('element-id').value;
+            ColorAPI.setColor(elementId, colorName);
+        }
+    </script>
+</body>
+</html>
